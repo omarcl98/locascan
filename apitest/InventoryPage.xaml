@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="apitest.InventoryPage"
+             Title="Inventario"
+             BackgroundColor="#FAFAFA">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        
+        <!-- Header con escáner y formulario -->
+        <Frame Grid.Row="0" 
+               BackgroundColor="#F5F5F5" 
+               Padding="16" 
+               Margin="0"
+               CornerRadius="0"
+               HasShadow="True">
+            <VerticalStackLayout Spacing="12">
+                
+                <!-- Título con botón de configuración -->
+                <Grid ColumnDefinitions="Auto,*,Auto">
+                    <Button Grid.Column="0"
+                            Text="⚙️"
+                            BackgroundColor="Transparent"
+                            TextColor="#6750A4"
+                            FontSize="20"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            Clicked="OnSettingsClicked" />
+                    <Label Grid.Column="1"
+                           Text="📦 Agregar Producto" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           TextColor="#1C1B1F"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="2"
+                            Text="🚪"
+                            BackgroundColor="Transparent"
+                            TextColor="#BA1A1A"
+                            FontSize="20"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            Clicked="OnLogoutClicked" />
+                </Grid>
+                
+                <!-- Código de barras escaneado -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Border Grid.Column="0"
+                            BackgroundColor="White"
+                            Stroke="#79747E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 4"
+                            Padding="12,8">
+                        <Entry x:Name="BarcodeEntry"
+                               Placeholder="Código de barras"
+                               PlaceholderColor="#757575"
+                               BackgroundColor="White"
+                               TextColor="Black"
+                               FontSize="14" />
+                    </Border>
+                    <Button Grid.Column="1"
+                            x:Name="ScanButton"
+                            Text="📷"
+                            BackgroundColor="#6750A4"
+                            TextColor="White"
+                            WidthRequest="50"
+                            HeightRequest="44"
+                            Clicked="OnScanClicked" />
+                </Grid>
+                
+                <!-- Nombre del producto -->
+                <Border BackgroundColor="White"
+                        Stroke="#79747E"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 4"
+                        Padding="12,8">
+                    <Entry x:Name="ProductNameEntry"
+                           Placeholder="Nombre del producto"
+                           PlaceholderColor="#757575"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           FontSize="14" />
+                </Border>
+                
+                <!-- Cantidad -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                    <Label Grid.Column="0" 
+                           Text="Cantidad:" 
+                           VerticalOptions="Center"
+                           TextColor="#49454F"
+                           FontSize="14" />
+                    <Border Grid.Column="1"
+                            BackgroundColor="White"
+                            Stroke="#79747E"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 4"
+                            Padding="12,8">
+                        <Entry x:Name="QuantityEntry"
+                               Placeholder="1"
+                               PlaceholderColor="#757575"
+                               Keyboard="Numeric"
+                               BackgroundColor="White"
+                               TextColor="Black"
+                               FontSize="14"
+                               Text="1" />
+                    </Border>
+                    <HorizontalStackLayout Grid.Column="2" Spacing="4">
+                        <Button Text="-" 
+                                BackgroundColor="#625B71"
+                                TextColor="White"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Clicked="OnDecreaseQuantity" />
+                        <Button Text="+" 
+                                BackgroundColor="#625B71"
+                                TextColor="White"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Clicked="OnIncreaseQuantity" />
+                    </HorizontalStackLayout>
+                </Grid>
+                
+                <!-- Selector de Almacén/Ubicación -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="🏭 Almacén" FontSize="12" TextColor="#49454F" />
+                        <Picker x:Name="LocationPicker"
+                                Title="Seleccionar ubicación"
+                                TitleColor="#757575"
+                                TextColor="Black"
+                                BackgroundColor="White"
+                                SelectedIndexChanged="OnLocationPickerChanged" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1"
+                            Text="➕"
+                            BackgroundColor="#625B71"
+                            TextColor="White"
+                            WidthRequest="50"
+                            HeightRequest="44"
+                            Clicked="OnManageLocationsClicked" />
+                </Grid>
+                
+                <!-- Coordenadas GPS -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="📍 Coordenadas GPS" FontSize="12" TextColor="#49454F" />
+                        <Label x:Name="LocationLabel" 
+                               Text="No disponible" 
+                               FontSize="12" 
+                               TextColor="#1C1B1F" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1"
+                            x:Name="LocationButton"
+                            Text="📍"
+                            BackgroundColor="#625B71"
+                            TextColor="White"
+                            WidthRequest="50"
+                            HeightRequest="44"
+                            Clicked="OnGetLocationClicked" />
+                </Grid>
+                
+                <!-- Botón Guardar -->
+                <Button x:Name="SaveButton"
+                        Text="💾 GUARDAR PRODUCTO"
+                        BackgroundColor="#6750A4"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        HeightRequest="48"
+                        Clicked="OnSaveClicked" />
+                        
+            </VerticalStackLayout>
+        </Frame>
+        
+        <!-- Lista de productos -->
+        <RefreshView Grid.Row="1" 
+                     x:Name="ProductsRefreshView"
+                     Refreshing="OnRefreshing">
+            <CollectionView x:Name="ProductsCollection"
+                            ItemsSource="{Binding Products}"
+                            SelectionMode="None"
+                            Margin="8">
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" 
+                                         HorizontalOptions="Center"
+                                         Padding="20">
+                        <Label Text="📦" FontSize="48" HorizontalOptions="Center" />
+                        <Label Text="No hay productos escaneados" 
+                               FontSize="16" 
+                               TextColor="#49454F"
+                               HorizontalOptions="Center" />
+                        <Label Text="Escanea un código de barras para comenzar" 
+                               FontSize="14" 
+                               TextColor="#79747E"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Editar"
+                                               BackgroundColor="#6750A4"
+                                               Invoked="OnEditSwipe"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Eliminar"
+                                               BackgroundColor="#BA1A1A"
+                                               Invoked="OnDeleteSwipe"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            
+                            <Frame BackgroundColor="White"
+                                   BorderColor="#E0E0E0"
+                                   CornerRadius="12"
+                                   Padding="16"
+                                   Margin="4,4"
+                                   HasShadow="True">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                                    
+                                    <!-- Nombre del producto -->
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding ProductName}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="#1C1B1F"
+                                           LineBreakMode="TailTruncation" />
+                                    
+                                    <!-- Cantidad -->
+                                    <Frame Grid.Row="0" Grid.Column="1"
+                                           BackgroundColor="#EADDFF"
+                                           BorderColor="Transparent"
+                                           CornerRadius="12"
+                                           Padding="8,4"
+                                           HasShadow="False">
+                                        <Label Text="{Binding Quantity, StringFormat='x{0}'}"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#6750A4" />
+                                    </Frame>
+                                    
+                                    <!-- Código de barras -->
+                                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Text="{Binding Barcode, StringFormat='📊 {0}'}"
+                                           FontSize="13"
+                                           TextColor="#49454F"
+                                           Margin="0,4,0,0" />
+                                    
+                                    <!-- Ubicación -->
+                                    <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Text="{Binding LocationDisplay, StringFormat='📍 {0}'}"
+                                           FontSize="12"
+                                           TextColor="#79747E"
+                                           Margin="0,2,0,0" />
+                                    
+                                    <!-- Fecha -->
+                                    <Label Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+                                           Text="{Binding DateDisplay, StringFormat='🕐 {0}'}"
+                                           FontSize="11"
+                                           TextColor="#9E9E9E"
+                                           Margin="0,2,0,0" />
+                                           
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        
+        <!-- Escáner de cámara (oculto por defecto) - Cubre toda la pantalla -->
+        <Grid Grid.Row="0" 
+              Grid.RowSpan="3"
+              x:Name="ScannerOverlay" 
+              IsVisible="False"
+              BackgroundColor="Black"
+              ZIndex="100">
+            
+            <!-- Contenedor para la cámara (se crea dinámicamente) -->
+            <Grid x:Name="CameraContainer" />
+            
+            <Frame BackgroundColor="#CC000000" 
+                   Padding="16" 
+                   Margin="16" 
+                   CornerRadius="12" 
+                   VerticalOptions="Start"
+                   HasShadow="False">
+                <Label Text="📷 Apunta la cámara al código de barras"
+                       FontSize="16"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+            </Frame>
+            
+            <Button Text="✕ CERRAR ESCÁNER"
+                    BackgroundColor="#BA1A1A"
+                    TextColor="White"
+                    VerticalOptions="End"
+                    Margin="16,0,16,32"
+                    Clicked="OnCloseScannerClicked" />
+        </Grid>
+        
+        <!-- Footer con estadísticas -->
+        <Frame Grid.Row="2"
+               BackgroundColor="#6750A4"
+               Padding="12"
+               CornerRadius="0"
+               HasShadow="False">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="24">
+                <VerticalStackLayout>
+                    <Label x:Name="TotalProductsLabel" 
+                           Text="0" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center" />
+                    <Label Text="Productos" 
+                           FontSize="12" 
+                           TextColor="#EADDFF"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <BoxView WidthRequest="1" BackgroundColor="#EADDFF" />
+                <VerticalStackLayout>
+                    <Label x:Name="TotalQuantityLabel" 
+                           Text="0" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center" />
+                    <Label Text="Unidades" 
+                           FontSize="12" 
+                           TextColor="#EADDFF"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
+        
+    </Grid>
+
+</ContentPage>
+

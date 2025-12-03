@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="apitest.LocationsPage"
+             Title="Ubicaciones"
+             BackgroundColor="#FAFAFA">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+        
+        <!-- Header con formulario -->
+        <Frame Grid.Row="0" 
+               BackgroundColor="#F5F5F5" 
+               Padding="16" 
+               Margin="0"
+               CornerRadius="0"
+               HasShadow="True">
+            <VerticalStackLayout Spacing="12">
+                
+                <!-- Título -->
+                <Label Text="📍 Nueva Ubicación" 
+                       FontSize="20" 
+                       FontAttributes="Bold"
+                       TextColor="#1C1B1F"
+                       HorizontalOptions="Center" />
+                
+                <!-- Nombre de la ubicación -->
+                <Border BackgroundColor="White"
+                        Stroke="#79747E"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 4"
+                        Padding="12,8">
+                    <Entry x:Name="LocationNameEntry"
+                           Placeholder="Nombre (ej: Bodega Principal)"
+                           PlaceholderColor="#757575"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           FontSize="14" />
+                </Border>
+                
+                <!-- Descripción -->
+                <Border BackgroundColor="White"
+                        Stroke="#79747E"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 4"
+                        Padding="12,8">
+                    <Entry x:Name="DescriptionEntry"
+                           Placeholder="Descripción (opcional)"
+                           PlaceholderColor="#757575"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           FontSize="14" />
+                </Border>
+                
+                <!-- Dirección -->
+                <Border BackgroundColor="White"
+                        Stroke="#79747E"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 4"
+                        Padding="12,8">
+                    <Entry x:Name="AddressEntry"
+                           Placeholder="Dirección (opcional)"
+                           PlaceholderColor="#757575"
+                           BackgroundColor="White"
+                           TextColor="Black"
+                           FontSize="14" />
+                </Border>
+                
+                <!-- Coordenadas GPS -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                        <Label Text="📍 Coordenadas GPS" FontSize="12" TextColor="#49454F" />
+                        <Label x:Name="CoordinatesLabel" 
+                               Text="No establecidas" 
+                               FontSize="12" 
+                               TextColor="#1C1B1F" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1"
+                            x:Name="GetCoordsButton"
+                            Text="📍 GPS"
+                            BackgroundColor="#625B71"
+                            TextColor="White"
+                            WidthRequest="80"
+                            HeightRequest="44"
+                            Clicked="OnGetCoordinatesClicked" />
+                </Grid>
+                
+                <!-- Selector de emoji/icono -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Label Grid.Column="0" 
+                           Text="Icono:" 
+                           VerticalOptions="Center"
+                           TextColor="#49454F"
+                           FontSize="14" />
+                    <HorizontalStackLayout Grid.Column="1" Spacing="8">
+                        <Button x:Name="Icon1" Text="🏭" BackgroundColor="#E0E0E0" TextColor="Black" WidthRequest="44" HeightRequest="44" Clicked="OnIconSelected" />
+                        <Button x:Name="Icon2" Text="🏪" BackgroundColor="#E0E0E0" TextColor="Black" WidthRequest="44" HeightRequest="44" Clicked="OnIconSelected" />
+                        <Button x:Name="Icon3" Text="📦" BackgroundColor="#E0E0E0" TextColor="Black" WidthRequest="44" HeightRequest="44" Clicked="OnIconSelected" />
+                        <Button x:Name="Icon4" Text="🏠" BackgroundColor="#E0E0E0" TextColor="Black" WidthRequest="44" HeightRequest="44" Clicked="OnIconSelected" />
+                        <Button x:Name="Icon5" Text="🏢" BackgroundColor="#E0E0E0" TextColor="Black" WidthRequest="44" HeightRequest="44" Clicked="OnIconSelected" />
+                    </HorizontalStackLayout>
+                </Grid>
+                
+                <!-- Botón Guardar -->
+                <Button x:Name="SaveButton"
+                        Text="💾 GUARDAR UBICACIÓN"
+                        BackgroundColor="#6750A4"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        HeightRequest="48"
+                        Clicked="OnSaveClicked" />
+                        
+            </VerticalStackLayout>
+        </Frame>
+        
+        <!-- Lista de ubicaciones -->
+        <RefreshView Grid.Row="1" 
+                     x:Name="LocationsRefreshView"
+                     Refreshing="OnRefreshing">
+            <CollectionView x:Name="LocationsCollection"
+                            ItemsSource="{Binding Locations}"
+                            SelectionMode="None"
+                            Margin="8">
+                
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" 
+                                         HorizontalOptions="Center"
+                                         Padding="20">
+                        <Label Text="📍" FontSize="48" HorizontalOptions="Center" />
+                        <Label Text="No hay ubicaciones creadas" 
+                               FontSize="16" 
+                               TextColor="#49454F"
+                               HorizontalOptions="Center" />
+                        <Label Text="Agrega tu primera ubicación arriba" 
+                               FontSize="14" 
+                               TextColor="#79747E"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Editar"
+                                               BackgroundColor="#6750A4"
+                                               Invoked="OnEditSwipe"
+                                               CommandParameter="{Binding .}" />
+                                    <SwipeItem Text="Eliminar"
+                                               BackgroundColor="#BA1A1A"
+                                               Invoked="OnDeleteSwipe"
+                                               CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            
+                            <Frame BackgroundColor="White"
+                                   BorderColor="#E0E0E0"
+                                   CornerRadius="12"
+                                   Padding="16"
+                                   Margin="4,4"
+                                   HasShadow="True">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    
+                                    <!-- Icono -->
+                                    <Frame Grid.Column="0"
+                                           BackgroundColor="#EADDFF"
+                                           BorderColor="Transparent"
+                                           CornerRadius="25"
+                                           WidthRequest="50"
+                                           HeightRequest="50"
+                                           Padding="0"
+                                           HasShadow="False">
+                                        <Label Text="{Binding IconEmoji}"
+                                               FontSize="24"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+                                    </Frame>
+                                    
+                                    <!-- Info -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="#1C1B1F"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Description}"
+                                               FontSize="13"
+                                               TextColor="#49454F"
+                                               LineBreakMode="TailTruncation"
+                                               IsVisible="{Binding Description, Converter={StaticResource StringNotEmptyConverter}}" />
+                                        <Label Text="{Binding CoordinatesDisplay, StringFormat='📍 {0}'}"
+                                               FontSize="11"
+                                               TextColor="#79747E" />
+                                    </VerticalStackLayout>
+                                    
+                                    <!-- Contador de productos -->
+                                    <Frame Grid.Column="2"
+                                           BackgroundColor="#E8F5E9"
+                                           BorderColor="Transparent"
+                                           CornerRadius="12"
+                                           Padding="8,4"
+                                           HasShadow="False"
+                                           VerticalOptions="Center">
+                                        <Label Text="{Binding ProductCount, StringFormat='{0} items'}"
+                                               FontSize="12"
+                                               FontAttributes="Bold"
+                                               TextColor="#2E7D32" />
+                                    </Frame>
+                                           
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        
+        <!-- Footer con estadísticas -->
+        <Frame Grid.Row="2"
+               BackgroundColor="#6750A4"
+               Padding="12"
+               CornerRadius="0"
+               HasShadow="False">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="24">
+                <VerticalStackLayout>
+                    <Label x:Name="TotalLocationsLabel" 
+                           Text="0" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center" />
+                    <Label Text="Ubicaciones" 
+                           FontSize="12" 
+                           TextColor="#EADDFF"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
+        
+    </Grid>
+
+</ContentPage>
+
+

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="apitest.HomePage"
+             Title="Inicio">
+
+    <Grid RowDefinitions="*,Auto">
+        <!-- Área de la cámara para escanear códigos -->
+        <Grid Grid.Row="0" BackgroundColor="Black">
+            <zxing:CameraBarcodeReaderView
+                x:Name="barcodeView"
+                BarcodesDetected="BarcodesDetected" />
+            
+            <!-- Overlay con instrucciones -->
+            <Frame 
+                BackgroundColor="#CC000000" 
+                Padding="20" 
+                Margin="20" 
+                CornerRadius="16" 
+                VerticalOptions="Start"
+                HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label 
+                        Text="📷 Escanea un código de barras o QR"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center" 
+                        TextColor="White" />
+                    <Label 
+                        Text="Apunta la cámara hacia el código"
+                        FontSize="14"
+                        HorizontalOptions="Center" 
+                        TextColor="White" />
+                </VerticalStackLayout>
+            </Frame>
+            
+            <!-- Info del usuario -->
+            <Frame 
+                BackgroundColor="#E0FFFFFF" 
+                Padding="12" 
+                Margin="16" 
+                CornerRadius="12" 
+                VerticalOptions="End"
+                HasShadow="True">
+                <Label
+                    x:Name="UserInfoLabel"
+                    FontSize="12"
+                    HorizontalOptions="Center"
+                    TextColor="#1C1B1F" />
+            </Frame>
+        </Grid>
+
+        <!-- Footer con controles -->
+        <Grid Grid.Row="1" BackgroundColor="#F5F5F5" Padding="16" RowDefinitions="Auto,Auto,Auto">
+            <!-- Resultado del escaneo -->
+            <Frame 
+                Grid.Row="0"
+                BackgroundColor="White"
+                BorderColor="#E0E0E0"
+                CornerRadius="12"
+                Margin="0,0,0,12"
+                Padding="16"
+                IsVisible="False"
+                HasShadow="True"
+                x:Name="ResultFrame">
+                <Label
+                    x:Name="ResultLabel"
+                    Text="Aquí aparecerá el contenido del código escaneado"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    TextColor="#1C1B1F" />
+            </Frame>
+
+            <!-- Información de ubicación -->
+            <Frame 
+                Grid.Row="1" 
+                BackgroundColor="#EADDFF" 
+                BorderColor="Transparent"
+                Padding="16" 
+                Margin="0,0,0,12" 
+                CornerRadius="12"
+                HasShadow="True">
+                <VerticalStackLayout Spacing="8">
+                    <Label 
+                        Text="📍 Ubicación del Escaneo" 
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center" 
+                        TextColor="#21005D" />
+                    
+                    <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="8" ColumnSpacing="12">
+                        <Label 
+                            Grid.Row="0" 
+                            Grid.Column="0" 
+                            Text="Latitud:" 
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            TextColor="#1C1B1F" 
+                            VerticalOptions="Center" />
+                        <Label 
+                            x:Name="LatitudeLabel" 
+                            Grid.Row="0" 
+                            Grid.Column="1" 
+                            Text="No disponible" 
+                            FontSize="13"
+                            TextColor="#49454F" 
+                            VerticalOptions="Center" />
+                        
+                        <Label 
+                            Grid.Row="1" 
+                            Grid.Column="0" 
+                            Text="Longitud:" 
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            TextColor="#1C1B1F" 
+                            VerticalOptions="Center" />
+                        <Label 
+                            x:Name="LongitudeLabel" 
+                            Grid.Row="1" 
+                            Grid.Column="1" 
+                            Text="No disponible" 
+                            FontSize="13"
+                            TextColor="#49454F" 
+                            VerticalOptions="Center" />
+                        
+                        <Label 
+                            Grid.Row="2" 
+                            Grid.Column="0" 
+                            Text="Precisión:" 
+                            FontSize="13"
+                            FontAttributes="Bold"
+                            TextColor="#1C1B1F" 
+                            VerticalOptions="Center" />
+                        <Label 
+                            x:Name="AccuracyLabel" 
+                            Grid.Row="2" 
+                            Grid.Column="1" 
+                            Text="No disponible" 
+                            FontSize="13"
+                            TextColor="#49454F" 
+                            VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Botones de control -->
+            <VerticalStackLayout Grid.Row="2" Spacing="12" HorizontalOptions="Fill">
+                <!-- Botón principal de Inventario -->
+                <Button
+                    x:Name="InventoryButton"
+                    Text="📦 INVENTARIO"
+                    Clicked="OnInventoryClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    HeightRequest="50"
+                    HorizontalOptions="Fill" />
+                    
+                <!-- Primera fila de botones -->
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Fill">
+                    <Button
+                        x:Name="ToggleCameraButton"
+                        Text="🔄 CÁMARA"
+                        Clicked="OnToggleCameraClicked"
+                        BackgroundColor="#6750A4"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand" />
+
+                    <Button
+                        x:Name="GetLocationButton"
+                        Text="📍 UBICACIÓN"
+                        Clicked="OnGetLocationClicked"
+                        BackgroundColor="#625B71"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand" />
+                </HorizontalStackLayout>
+
+                <!-- Segunda fila - Botones de información y logout -->
+                <HorizontalStackLayout Spacing="12" HorizontalOptions="Fill">
+                    <Button
+                        x:Name="InfoButton"
+                        Text="ℹ️ INFO"
+                        Clicked="OnInfoClicked"
+                        BackgroundColor="White"
+                        TextColor="#6750A4"
+                        BorderColor="#6750A4"
+                        BorderWidth="1"
+                        HorizontalOptions="FillAndExpand" />
+
+                    <Button
+                        x:Name="LogoutButton"
+                        Text="🚪 SALIR" 
+                        Clicked="OnLogoutClicked"
+                        BackgroundColor="#BA1A1A"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+
+</ContentPage>

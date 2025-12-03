@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "171294380165",
+    "project_id": "pitest-cddce",
+    "storage_bucket": "pitest-cddce.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171294380165:android:51d161c4600285ff5c19ec",
+        "android_client_info": {
+          "package_name": "com.companyname.apitest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "171294380165-6sld7j8qqeseq8mq23cqn09sme3gcdqb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBahm4iPrO8x-dVgPm78CeYK-ItATvIFDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "171294380165-6sld7j8qqeseq8mq23cqn09sme3gcdqb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "171294380165-v2lih4e0hkqaqfeh5bsauvnsiq4cljk0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.companyname.apitest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

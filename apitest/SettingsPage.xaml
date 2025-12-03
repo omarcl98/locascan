@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="apitest.SettingsPage"
+             Title="Configuración"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+            
+            <!-- Header -->
+            <Label Text="⚙️ Configuración"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   TextColor="#1C1B1F"
+                   HorizontalOptions="Center"
+                   Margin="0,8,0,16" />
+
+            <!-- Sección: Apariencia -->
+            <Frame BackgroundColor="#F5F5F5"
+                   BorderColor="Transparent"
+                   CornerRadius="12"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="16">
+                    <Label Text="🎨 Apariencia"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#6750A4" />
+                    
+                    <!-- Modo oscuro -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="Modo oscuro"
+                                   FontSize="16"
+                                   TextColor="#1C1B1F" />
+                            <Label Text="Tema oscuro para la aplicación"
+                                   FontSize="12"
+                                   TextColor="#49454F" />
+                        </VerticalStackLayout>
+                        <Switch x:Name="DarkModeSwitch"
+                                Grid.Column="1"
+                                OnColor="#6750A4"
+                                Toggled="OnDarkModeToggled" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sección: Estadísticas -->
+            <Frame BackgroundColor="#EADDFF"
+                   BorderColor="Transparent"
+                   CornerRadius="12"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="📊 Estadísticas"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#21005D" />
+                    
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="Total de escaneos:"
+                               FontSize="14"
+                               TextColor="#1C1B1F" />
+                        <Label x:Name="ScanCountLabel"
+                               Grid.Row="0" Grid.Column="1"
+                               Text="0"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#6750A4" />
+                        
+                        <Label Grid.Row="1" Grid.Column="0"
+                               Text="Última sincronización:"
+                               FontSize="14"
+                               TextColor="#1C1B1F" />
+                        <Label x:Name="LastSyncLabel"
+                               Grid.Row="1" Grid.Column="1"
+                               Text="Nunca"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#6750A4" />
+                        
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Text="Última ubicación:"
+                               FontSize="14"
+                               TextColor="#1C1B1F" />
+                        <Label x:Name="LastLocationLabel"
+                               Grid.Row="2" Grid.Column="1"
+                               Text="No disponible"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#6750A4" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Sección: Usuario -->
+            <Frame BackgroundColor="#F5F5F5"
+                   BorderColor="Transparent"
+                   CornerRadius="12"
+                   Padding="16"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="👤 Usuario"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#6750A4" />
+                    
+                    <Label x:Name="UserEmailLabel"
+                           Text="No conectado"
+                           FontSize="14"
+                           TextColor="#1C1B1F" />
+                    
+                    <Label x:Name="UserNameLabel"
+                           Text=""
+                           FontSize="12"
+                           TextColor="#49454F" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Botones de acción -->
+            <VerticalStackLayout Spacing="12" Margin="0,8,0,0">
+                <Button Text="ℹ️ INFORMACIÓN DEL DESARROLLADOR"
+                        BackgroundColor="#6750A4"
+                        TextColor="White"
+                        Clicked="OnInfoClicked" />
+                
+                <Button Text="🔄 RESTAURAR VALORES"
+                        BackgroundColor="#625B71"
+                        TextColor="White"
+                        Clicked="OnResetClicked" />
+                
+                <Button Text="🗑️ BORRAR TODOS LOS DATOS"
+                        BackgroundColor="#BA1A1A"
+                        TextColor="White"
+                        Clicked="OnClearAllClicked" />
+            </VerticalStackLayout>
+
+            <!-- Versión -->
+            <Label Text="LocaScan v1.0"
+                   FontSize="12"
+                   TextColor="#9E9E9E"
+                   HorizontalOptions="Center"
+                   Margin="0,16,0,8" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+

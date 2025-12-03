@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="apitest.SplashPage"
+             Title="Splash"
+             BackgroundColor="{StaticResource PrimaryDark}">
+
+    <Grid>
+        <!-- Fondo con gradiente Material Design -->
+        <Grid BackgroundColor="{StaticResource PrimaryDark}" />
+        
+        <!-- Contenido centrado -->
+        <VerticalStackLayout 
+            HorizontalOptions="Center" 
+            VerticalOptions="Center" 
+            Spacing="32"
+            Padding="24">
+            
+            <!-- Logo principal con elevación -->
+            <Frame
+                BackgroundColor="{StaticResource Surface}"
+                CornerRadius="24"
+                Padding="16"
+                HasShadow="True"
+                HorizontalOptions="Center"
+                Margin="0,0,0,8">
+                <Image 
+                    Source="logo_locascan.png"
+                    WidthRequest="160"
+                    HeightRequest="160"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center" />
+            </Frame>
+            
+            <!-- Título de la aplicación -->
+            <Label 
+                Text="LocaScan"
+                Style="{StaticResource Headline}"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource OnPrimary}"
+                Margin="0,16,0,0" />
+            
+            <!-- Subtítulo -->
+            <Label 
+                Text="Escanea • Localiza • Autentica"
+                Style="{StaticResource BodyLarge}"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource PrimaryLight}"
+                Margin="0,8,0,0" />
+            
+            <!-- Indicador de carga -->
+            <ActivityIndicator 
+                x:Name="LoadingIndicator"
+                IsRunning="True"
+                Color="{StaticResource PrimaryLight}"
+                WidthRequest="48"
+                HeightRequest="48"
+                Margin="0,40,0,0" />
+            
+            <!-- Texto de carga -->
+            <Label 
+                Text="Cargando..."
+                Style="{StaticResource BodyMedium}"
+                HorizontalOptions="Center"
+                TextColor="{StaticResource PrimaryLight}"
+                Margin="0,16,0,0" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
+
+

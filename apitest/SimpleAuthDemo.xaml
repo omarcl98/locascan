@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="apitest.SimpleAuthDemo"
+             Title="Firebase Auth Demo">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30"
+            Spacing="25"
+            VerticalOptions="Center">
+            
+            <Label
+                Text="🔥 Firebase Authentication Demo"
+                FontSize="24"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                TextColor="#FF6B35" />
+
+            <Label
+                Text="Integración con Google Sign-In"
+                FontSize="16"
+                HorizontalOptions="Center"
+                TextColor="Gray" />
+
+            <Frame
+                BackgroundColor="#F5F5F5"
+                Padding="20"
+                Margin="0,20,0,0">
+                
+                <VerticalStackLayout Spacing="15">
+                    <Label
+                        x:Name="StatusLabel"
+                        Text="No autenticado"
+                        FontSize="18"
+                        HorizontalOptions="Center"
+                        TextColor="Gray" />
+
+                    <Label
+                        x:Name="UserInfoLabel"
+                        FontSize="16"
+                        HorizontalOptions="Center"
+                        TextColor="Black"
+                        IsVisible="False" />
+
+                    <Button
+                        x:Name="LoginButton"
+                        Text="🔐 Iniciar sesión con Google" 
+                        Clicked="OnLoginClicked"
+                        BackgroundColor="#4285F4"
+                        TextColor="White"
+                        HorizontalOptions="Fill"
+                        CornerRadius="25"
+                        HeightRequest="50" />
+
+                    <Button
+                        x:Name="LogoutButton"
+                        Text="🚪 Cerrar sesión" 
+                        Clicked="OnLogoutClicked"
+                        BackgroundColor="#DB4437"
+                        TextColor="White"
+                        HorizontalOptions="Fill"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        IsVisible="False" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label
+                Text="✨ Demo para clase de desarrollo móvil"
+                FontSize="14"
+                HorizontalOptions="Center"
+                TextColor="LightGray"
+                Margin="0,20,0,0" />
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="apitest.MainPage"
+             BackgroundColor="White">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="24"
+            Spacing="32"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill">
+            
+            <!-- Header -->
+            <VerticalStackLayout Spacing="8" HorizontalOptions="Center" Margin="0,32,0,0">
+                <Label
+                    Text="Firebase Authentication"
+                    FontSize="32"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    TextColor="#1C1B1F"
+                    SemanticProperties.HeadingLevel="Level1" />
+                
+                <Label
+                    Text="Inicia sesión para continuar"
+                    FontSize="14"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    TextColor="#49454F" />
+            </VerticalStackLayout>
+
+            <!-- Status Label -->
+            <Label
+                x:Name="StatusLabel"
+                Text="No has iniciado sesión"
+                FontSize="16"
+                HorizontalOptions="Center"
+                TextColor="#49454F"
+                Margin="0,8,0,0" />
+
+            <Label
+                x:Name="UserInfoLabel"
+                FontSize="14"
+                HorizontalOptions="Center"
+                IsVisible="False" />
+
+            <!-- Login Card -->
+            <Frame
+                x:Name="LoginFrame"
+                BackgroundColor="White"
+                BorderColor="Transparent"
+                CornerRadius="16"
+                Padding="24"
+                HasShadow="True"
+                Margin="0,16,0,0">
+                <VerticalStackLayout Spacing="24">
+                    <Label 
+                        Text="Credenciales de Firebase" 
+                        FontSize="20"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        TextColor="#1C1B1F" />
+                    
+                    <!-- Email Entry -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label 
+                            Text="Email" 
+                            FontSize="12"
+                            TextColor="#49454F"
+                            Margin="4,0,0,0" />
+                        <Frame
+                            BackgroundColor="White"
+                            BorderColor="#79747E"
+                            HasShadow="False"
+                            CornerRadius="4"
+                            Padding="16,12">
+                            <Entry
+                                x:Name="EmailEntry"
+                                Placeholder="usuario@ejemplo.com"
+                                Keyboard="Email"
+                                BackgroundColor="Transparent"
+                                TextColor="#1C1B1F" />
+                        </Frame>
+                    </VerticalStackLayout>
+                    
+                    <!-- Password Entry -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label 
+                            Text="Contraseña" 
+                            FontSize="12"
+                            TextColor="#49454F"
+                            Margin="4,0,0,0" />
+                        <Frame
+                            BackgroundColor="White"
+                            BorderColor="#79747E"
+                            HasShadow="False"
+                            CornerRadius="4"
+                            Padding="16,12">
+                            <Entry
+                                x:Name="PasswordEntry"
+                                Placeholder="••••••••"
+                                IsPassword="True"
+                                BackgroundColor="Transparent"
+                                TextColor="#1C1B1F" />
+                        </Frame>
+                    </VerticalStackLayout>
+                    
+                    <Button
+                        x:Name="LoginButton"
+                        Text="INICIAR SESIÓN" 
+                        Clicked="OnLoginClicked"
+                        BackgroundColor="#6750A4"
+                        TextColor="White"
+                        HorizontalOptions="Fill"
+                        Margin="0,8,0,0" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Logout Button -->
+            <Button
+                x:Name="LogoutButton"
+                Text="CERRAR SESIÓN" 
+                Clicked="OnLogoutClicked"
+                BackgroundColor="#BA1A1A"
+                TextColor="White"
+                HorizontalOptions="Fill"
+                IsVisible="False"
+                Margin="24,0,24,0" />
+                
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
